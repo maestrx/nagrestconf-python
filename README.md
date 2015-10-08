@@ -6,11 +6,17 @@ Aim: Can be used as a standalone tool to run REST commands or included in Python
 CLI usage:
 
 \# nagrestconf.py -s <server> -r <request> [ -d <data> | -p | -v ]
+
   -s        Server URI to connect to. It may include HTTP auth data. Ex: https://user:password@restserver/rest
+  
   -r        Request to run: show/hosts, apply/nagiosconfig, etc.
+  
   -d        Data passed for the request, set of data pairs separated by comma
+  
   -p        Run POST request (Needed for all calls except for check and show)
+  
   -v        Verbose level. Default verbosity is ERROR. Each -v increases the log level by one step
+  
 
 \# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r show/hosts
 
