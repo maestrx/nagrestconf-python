@@ -26,19 +26,29 @@ CLI usage:
 Python usage example:
 
 from nagrestconf import nagrestconf
+
 import logging
 
 def objSeek(obj,name):
+
   for ind,val in enumerate(obj):
+  
     if name in val:
+    
         return val[name]
+        
   return None
 
 nrc=nagrestconf('https://user:pass@nagrestconf.my.org/rest')
+
 res,naghosts=nrc.showhosts()
+
 if not res:
+
   logging.exception('Failed to get list of hosts from nagrestconf with error: %s',naghosts)
+  
 for naghid,nagh in enumerate(naghosts):
+
   print objSeek(nagh, 'name'), objSeek(nagh, 'ipaddress')
 
       
