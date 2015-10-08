@@ -13,12 +13,14 @@ CLI usage:
   -v        Verbose level. Default verbosity is ERROR. Each -v increases the log level by one step
 
 \# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r show/hosts
+
 \# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r modify/hosts -d name:host1,ipaddress:10.10.10.10 -p
 
 
 Python usage example:
 
-#python
+\#python
+
 from nagrestconf import nagrestconf
 import logging
 
@@ -30,12 +32,14 @@ def objSeek(obj,name):
 
 nrc=nagrestconf('https://user:pass@nagrestconf.my.org/rest')
 
-# list all hosts
+\# list all hosts
+
 res,naghosts=nrc.showhosts()
 if not res:
   logging.exception('Failed to get list of hosts from nagrestconf with error: %s',naghosts)
   
-# look for teh host in the nagrestconf dump
+\# look for teh host in the nagrestconf dump
+
 for naghid,nagh in enumerate(naghosts):
   # in case the host exists in nagrestconf
   print objSeek(nagh, 'name'), objSeek(nagh, 'ipaddress')
