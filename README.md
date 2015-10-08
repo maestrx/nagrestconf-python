@@ -19,8 +19,6 @@ CLI usage:
 
 Python usage example:
 
-\#python
-
 from nagrestconf import nagrestconf
 import logging
 
@@ -31,17 +29,10 @@ def objSeek(obj,name):
   return None
 
 nrc=nagrestconf('https://user:pass@nagrestconf.my.org/rest')
-
-\# list all hosts
-
 res,naghosts=nrc.showhosts()
 if not res:
   logging.exception('Failed to get list of hosts from nagrestconf with error: %s',naghosts)
-  
-\# look for teh host in the nagrestconf dump
-
 for naghid,nagh in enumerate(naghosts):
-  # in case the host exists in nagrestconf
   print objSeek(nagh, 'name'), objSeek(nagh, 'ipaddress')
 
       
