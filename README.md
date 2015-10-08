@@ -4,7 +4,7 @@ python API binding for mclarkson/nagrestconf
 Aim: Can be used as a standalone tool to run REST commands or included in Python code and use a APi binding
 
 CLI usage:
-# nagrestconf.py -s <server> -r <request> [ -d <data> | -p | -v ]
+\# nagrestconf.py -s <server> -r <request> [ -d <data> | -p | -v ]
   -s        Server URI to connect to. It may include HTTP auth data. Ex: https://user:password@restserver/rest
   -r        Request to run: show/hosts, apply/nagiosconfig, etc.
   -d        Data passed for the request, set of data pairs separated by comma
