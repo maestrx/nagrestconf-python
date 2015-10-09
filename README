@@ -1,0 +1,62 @@
+# nagrestconf-python
+python API binding for mclarkson/nagrestconf
+
+Aim: Can be used as a standalone tool to run REST commands or included in Python code and use a APi binding
+
+* CLI usage:
+
+# usage: nagrestconf.py [-h] [-s SERVER] [-r REQUEST] [-p] [-j] [-d DATA] [-v|vv|vvv|vvvv] [-D DELIMITER] [-f FILTER]
+
+  -h, --help            show this help message and exit
+  -s SERVER, --server SERVER
+                        Server URI to connect to. It may include HTTP auth
+                        data. Ex: https://user:password@restserver/rest
+  -r REQUEST, --request REQUEST
+                        Request to run: show/hosts, apply/nagiosconfig, etc.
+                        OR shortcuts: cn => check/nagiosconfig , sh =>
+                        show/hosts , ss => show/services , sn => show/contacts
+                        , sm => show/commands , mh => modify/hosts , ms =>
+                        modify/services , mn => modify/contacts , mm =>
+                        modify/commands , dh => delete/hosts , ds =>
+                        delete/services , dn => delete/contacts , dm =>
+                        delete/commands , ah => add/hosts , as => add/services
+                        , an => add/contacts , am => add/commands , rn =>
+                        restart/nagios , nc => apply/nagiosconfig , nl =>
+                        apply/nagioslastgoodconfig
+  -p, --post            Run POST request. Needed for all calls except for
+                        check and show. Shortcut calls does not need this.
+  -j, --json            Show result in JSON format
+  -d DATA, --data DATA  Request data pairs (name:value) separated by comma
+                        with no spaces. Ex:
+                        name:monitoredhost1,svcdesc:ssh,command:check_ssh
+  -v, --verbose         Verbose level. Default verbosity is ERROR. Each -v
+                        increases the log level by one step
+  -D DELIMITER, --delimiter DELIMITER
+                        Delimiter for the pipe output
+  -f FILTER, --filter FILTER
+                        Filter rule pairs (name:value) separated by comma with
+                        no spaces. Ex:
+                        name:monitoredhost1,svcdesc:ssh,command:check_ssh
+  
+  Examples:
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r show/hosts
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r mh -d name:host1,ipaddress:10.10.10.10
+
+
+* Python usage example:
+
+from nagrestconf import nagrestconf
+import logging
+
+def objSeek(obj,name):
+  for ind,val in enumerate(obj):
+    if name in val:
+        return val[name]
+  return None
+
+nrc=nagrestconf('https://user:pass@nagrestconf.my.org/rest')
+res,naghosts=nrc.showhosts()
+if not res:
+  logging.exception('Failed to get list of hosts from nagrestconf with error: %s',naghosts)
+for naghid,nagh in enumerate(naghosts):
+  print objSeek(nagh, 'name'), objSeek(nagh, 'ipaddress')
