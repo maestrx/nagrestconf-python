@@ -41,6 +41,8 @@ Aim: Can be used as a standalone tool to run REST commands or included in Python
   Examples:
 # nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r show/hosts
 # nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r mh -d name:host1,ipaddress:10.10.10.10
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r sh -f name:host1
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r sh -f name:host1 -D'\t'
 
 
 * Python usage example:
