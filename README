@@ -7,10 +7,15 @@ Aim: Can be used as a standalone tool to run REST commands or included in Python
 
 # usage: nagrestconf.py [-h] [-s SERVER] [-r REQUEST] [-p] [-j] [-d DATA] [-v|vv|vvv|vvvv] [-D DELIMITER] [-f FILTER]
 
+NagRESTConf API
+
+optional arguments:
   -h, --help            show this help message and exit
   -s SERVER, --server SERVER
                         Server URI to connect to. It may include HTTP auth
-                        data. Ex: https://user:password@restserver/rest
+                        data. Ex: https://user:password@restserver/rest Server
+                        argument can be saved in ~/.nagrestconf in form
+                        [client] \n server=http://xxx/rest
   -r REQUEST, --request REQUEST
                         Request to run: show/hosts, apply/nagiosconfig, etc.
                         OR shortcuts: cn => check/nagiosconfig , sh =>
@@ -37,6 +42,7 @@ Aim: Can be used as a standalone tool to run REST commands or included in Python
                         Filter rule pairs (name:value) separated by comma with
                         no spaces. Ex:
                         name:monitoredhost1,svcdesc:ssh,command:check_ssh
+
   
   Examples:
 # nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r show/hosts
