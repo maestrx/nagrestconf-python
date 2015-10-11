@@ -42,6 +42,9 @@ optional arguments:
                         Filter rule pairs (name:value) separated by comma with
                         no spaces. Ex:
                         name:monitoredhost1,svcdesc:ssh,command:check_ssh
+  -F FOLDER, --folder FOLDER
+                        Folder to target. Default:local
+
 
   
   Examples:
