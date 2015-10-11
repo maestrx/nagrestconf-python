@@ -10,7 +10,7 @@
 #        AUTHOR: vit.safar@gemalto.com
 #  ORGANIZATION:
 #       CREATED: 10/10/15
-#      REVISION: 1.2
+#      REVISION: 1.3
 #     CHANGELOG:
 # 9.10.2015, v1.1:
 # - Output suitable for scripts - choice of delimiter? Then I would choose 'tab'.
@@ -19,7 +19,9 @@
 # 11.10.2015, v1.2:
 # - Store server configuration in ~/.nagrestconf file
 # - Possibility to define API folder parameter from CLI
-
+# 11.10.2015, v1.3:
+# - Do urldecode of all output data
+# - Data and filter pair separator has been changed form : to =
 # ===============================================================================
 
 
@@ -28,7 +30,7 @@ import os
 import logging
 import pycurl
 import json
-from urllib import urlencode
+import urllib
 from StringIO import StringIO
 
 
@@ -82,7 +84,7 @@ class nagrestconf:
         c.setopt(c.SSL_VERIFYPEER, False)
 
         param.update({'folder': self._folder})
-        param = urlencode({'json': json.dumps(param)})
+        param = urllib.urlencode({'json': json.dumps(param)})
         if post:
             c.setopt(c.URL, '{0}/{1}'.format(self._server_uri, req))
             c.setopt(c.POSTFIELDS, param)
@@ -103,7 +105,7 @@ class nagrestconf:
 
         # parse request results
         try:
-            resjson = json.loads(body)
+            resjson = json.loads(urllib.unquote_plus(body))
         except:
             logging.error('Unable to parse server response: %s', body)
             return [False, 'Unable to parse server response: {0}'.format(body)]
@@ -369,12 +371,12 @@ nc => apply/nagiosconfig , nl => apply/nagioslastgoodconfig")
                             help='Run POST request. Needed for all calls except for check and show. Shortcut calls does not need this.')
         parser.add_argument('-j', '--json', action='store_true', help='Show result in JSON format')
         parser.add_argument('-d', '--data',
-                            help='Request data pairs (name:value) separated by comma with no spaces. Ex: name:monitoredhost1,svcdesc:ssh,command:check_ssh')
+                            help='Request data pairs (name=value) separated by comma with no spaces. Ex: name=monitoredhost1,svcdesc=ssh,command=check_ssh')
         parser.add_argument('-v', '--verbose', action='count',
                             help='Verbose level. Default verbosity is ERROR. Each -v increases the log level by one step')
         parser.add_argument('-D', '--delimiter', help='Delimiter for the pipe output')
         parser.add_argument('-f', '--filter',
-                            help='Filter rule pairs (name:value) separated by comma with no spaces. Ex: name:monitoredhost1,svcdesc:ssh,command:check_ssh')
+                            help='Filter rule pairs (name=value) separated by comma with no spaces. Ex: name=monitoredhost1,svcdesc=ssh,command=check_ssh')
         parser.add_argument('-F', '--folder', help='Folder to target. Default:local')
 
         args = vars(parser.parse_args())
@@ -423,20 +425,20 @@ nc => apply/nagiosconfig , nl => apply/nagioslastgoodconfig")
             params = args['data'].split(',')
             for param in params:
                 try:
-                    param = param.split(':')
+                    param = param.split('=')
                     data.update({param[0]: param[1]})
                 except:
-                    logging.exception('Data argument has to have syntax: <name>:<value>[,<name2>:<value2>,...]  ')
+                    logging.exception('Data argument has to have syntax: <name>=<value>[,<name2>=<value2>,...]  ')
                     sys.exit(2)
 
         if args['filter'] != None:
             filters = args['filter'].split(',')
             for filt in filters:
                 try:
-                    filt = filt.split(':')
+                    filt = filt.split('=')
                     filter.update({filt[0]: filt[1]})
                 except:
-                    logging.exception('Filter argument has to have syntax: <name>:<value>[,<name2>:<value2>,...]  ')
+                    logging.exception('Filter argument has to have syntax: <name>=<value>[,<name2>=<value2>,...]  ')
                     sys.exit(2)
 
         nrc = nagrestconf(server, folder, log)
