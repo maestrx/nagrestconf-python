@@ -31,17 +31,17 @@ optional arguments:
   -p, --post            Run POST request. Needed for all calls except for
                         check and show. Shortcut calls does not need this.
   -j, --json            Show result in JSON format
-  -d DATA, --data DATA  Request data pairs (name:value) separated by comma
+  -d DATA, --data DATA  Request data pairs (name=value) separated by comma
                         with no spaces. Ex:
-                        name:monitoredhost1,svcdesc:ssh,command:check_ssh
+                        name=monitoredhost1,svcdesc=ssh,command=check_ssh
   -v, --verbose         Verbose level. Default verbosity is ERROR. Each -v
                         increases the log level by one step
   -D DELIMITER, --delimiter DELIMITER
                         Delimiter for the pipe output
   -f FILTER, --filter FILTER
-                        Filter rule pairs (name:value) separated by comma with
+                        Filter rule pairs (name=value) separated by comma with
                         no spaces. Ex:
-                        name:monitoredhost1,svcdesc:ssh,command:check_ssh
+                        name=monitoredhost1,svcdesc=ssh,command=check_ssh
   -F FOLDER, --folder FOLDER
                         Folder to target. Default:local
 
@@ -49,9 +49,9 @@ optional arguments:
   
   Examples:
 # nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r show/hosts
-# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r mh -d name:host1,ipaddress:10.10.10.10
-# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r sh -f name:host1
-# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r sh -f name:host1 -D'\t'
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r mh -d name=host1,ipaddress=10.10.10.10
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r sh -f name=host1
+# nagrestconf.py -s https://user:pass@nagrestconf.my.org/rest -r sh -f name=host1 -D'\t'
 
 
 * Python usage example:
