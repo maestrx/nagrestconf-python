@@ -107,7 +107,7 @@ class nagrestconf:
         try:
             resjson = json.loads(urllib.unquote_plus(body))
         except:
-            logging.error('Unable to parse server response: %s', body)
+            logging.exception('Unable to parse server response: %s', body)
             return [False, 'Unable to parse server response: {0}'.format(body)]
         logging.debug('run.Decoded response JSON: %s', resjson)
 
