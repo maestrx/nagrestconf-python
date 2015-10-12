@@ -22,6 +22,8 @@
 # 11.10.2015, v1.3:
 # - Do urldecode of all output data
 # - Data and filter pair separator has been changed form : to =
+# 12.10.2015, v1.4:
+# - Added exception log for the parsing issues
 # ===============================================================================
 
 
